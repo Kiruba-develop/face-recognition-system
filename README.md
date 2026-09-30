@@ -1,3 +1,53 @@
+## Data Setup
+
+This project uses Git LFS (Large File Storage) and automated setup scripts to manage datasets, models, and encodings.
+
+### Quick Data Setup
+
+```bash
+# Check current data status
+python setup_data.py --status
+
+# Interactive setup wizard
+python setup_data.py
+
+# Auto-download all components
+python setup_data.py --auto
+
+# Setup specific components
+python setup_data.py --dataset      # Training dataset
+python setup_data.py --known-faces  # Face encodings database
+python setup_data.py --models       # Pre-trained models
+```
+
+### Configure Data Sources
+
+To enable automatic downloads, configure the URLs in `setup_data.py`:
+
+1. **Upload your data** to cloud storage (Google Drive, AWS S3, GitHub Releases, etc.)
+2. **Get the download URL**
+3. **Update `DATA_SOURCES` dictionary** in `setup_data.py` with your URLs
+
+**See [DATA_SETUP.md](DATA_SETUP.md) for detailed setup instructions.**
+
+### Directory Structure
+
+```
+data/
+├── dataset/              # Training images (organized by person)
+│   ├── person1/
+│   ├── person2/
+│   └── ...
+├── known_faces/          # Pre-computed face encodings
+│   ├── encodings.pkl
+│   └── names.pkl
+└── models/               # Trained model weights
+    ├── custom_model.h5
+    └── transfer_learning.h5
+```
+
+---
+
 # Face Recognition System
 
 A comprehensive face recognition system using OpenCV, TensorFlow, and face_recognition libraries with custom model training capabilities.
@@ -34,6 +84,9 @@ A comprehensive face recognition system using OpenCV, TensorFlow, and face_recog
 ```
 face-recognition-system/
 ├── README.md
+├── DATA_SETUP.md              # Data setup guide
+├── setup_data.py              # Automated data setup script
+├── .gitattributes             # Git LFS configuration
 ├── requirements.txt
 ├── setup.py
 ├── data/
@@ -83,6 +136,9 @@ pip install -r requirements.txt
 conda create -n face-recognition python=3.8
 conda activate face-recognition
 pip install -r requirements.txt
+
+# Setup data (datasets, models, encodings)
+python setup_data.py --auto
 ```
 
 ## Usage
@@ -305,6 +361,11 @@ db.export_encodings('encodings.pkl')
 - Increase detection scale
 - Use higher resolution image
 
+### Issue: Data not downloading
+- Check network connection
+- Verify URLs are configured in `setup_data.py`
+- See [DATA_SETUP.md](DATA_SETUP.md) for troubleshooting
+
 ## Dependencies
 
 - **OpenCV** - Face detection
@@ -358,4 +419,7 @@ Contributions welcome! Please:
 
 ## Support
 
-For issues and questions, please open an issue on GitHub.
+For issues and questions, please:
+- Check [DATA_SETUP.md](DATA_SETUP.md) for data-related questions
+- See [troubleshooting guide](#troubleshooting)
+- Open an [issue on GitHub](https://github.com/Kiruba-develop/face-recognition-system/issues)
